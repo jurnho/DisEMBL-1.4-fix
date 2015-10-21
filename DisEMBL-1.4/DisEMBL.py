@@ -1,4 +1,5 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
+
 # Copyright (C) 2004 Rune Linding & Lars Juhl Jensen - EMBL
 # The DisEMBL is licensed under the GPL license
 # (http://www.opensource.org/licenses/gpl-license.php)
@@ -19,8 +20,8 @@ import os
 from os import system,popen3
 
 # change these to the correct paths
-NN_bin = '/PATH/DisEMBL-1.4/disembl'
-SG_bin = '/PATH/DisEMBL-1.4/sav_gol'
+NN_bin = os.environ['NN_bin']
+SG_bin = os.environ['SG_bin']
 
 def JensenNet(sequence):
     outFile = tempfile.mktemp()
@@ -151,7 +152,7 @@ def runDisEMBLpipeline():
     print '# EMBL Biocomputing Unit - Heidelberg - Germany        '
     print '#'
     for cur_record in SeqIO.parse(db, "fasta"):
-	    sequence = upper(str(cur_record.seq.data))
+	    sequence = upper(str(cur_record.seq.tostring()))
             # Run NN
             COILS_raw, HOTLOOPS_raw, REM465_raw = JensenNet(sequence)
             # Run Savitzky-Golay
